@@ -232,6 +232,22 @@
       })
       .then(function () { busy = false; sendBtn.disabled = false; });
   }
+
+  /* ───────── voice: the browser's own speech recognition fills the box; nothing is sent until you press Send ───────── */
+  (function () {
+    var SR = window.SpeechRecognition || window.webkitSpeechRecognition, mic = $('micBtn'), note = $('voiceNote');
+    if (!mic) return;
+    if (!SR) { mic.hidden = true; return; }
+    var rec = new SR(); rec.lang = 'en-US'; rec.interimResults = true; rec.continuous = true;
+    var on = false, timer = null;
+    function stopUI() { on = false; clearTimeout(timer); mic.classList.remove('on'); mic.setAttribute('aria-pressed', 'false'); mic.setAttribute('aria-label', 'Speak instead of typing'); note.hidden = true; }
+    function arm() { clearTimeout(timer); timer = setTimeout(function () { if (on) rec.stop(); }, 2000); }
+    rec.addEventListener('start', function () { on = true; mic.classList.add('on'); mic.setAttribute('aria-pressed', 'true'); mic.setAttribute('aria-label', 'Stop listening'); note.textContent = 'Listening\u2026 stops after a short pause.'; note.hidden = false; arm(); });
+    rec.addEventListener('end', stopUI);
+    rec.addEventListener('error', function (e) { stopUI(); if (e.error === 'not-allowed' || e.error === 'service-not-allowed') { note.textContent = 'Microphone access is blocked. Allow it in your browser\u2019s site settings to talk instead of type.'; note.hidden = false; } });
+    rec.addEventListener('result', function (e) { arm(); var t = ''; for (var i = 0; i < e.results.length; i++) t += e.results[i][0].transcript; input.value = t; grow(); });
+    mic.addEventListener('click', function () { if (on) rec.stop(); else { try { rec.start(); } catch (err) {} } });
+  })();
   input.addEventListener('input', grow);
   input.addEventListener('keydown', function (e) { if (e.key === 'Enter' && !e.shiftKey && !e.isComposing) { e.preventDefault(); send(); } });
   sendBtn.addEventListener('click', send);

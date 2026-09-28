@@ -62,8 +62,10 @@
       <div class="composer">
         <label class="sr" for="chatInput">Your message</label>
         <textarea id="chatInput" rows="1" placeholder="Tell me what to make"></textarea>
+        <button class="mic" id="micBtn" type="button" aria-pressed="false" aria-label="Speak instead of typing" title="Speak instead of typing"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0"/><path d="M12 18v3"/><path d="M8.5 21h7"/></svg></button>
         <button class="send" id="sendBtn" type="button">Send</button>
       </div>
+      <p class="voice-note" id="voiceNote" role="status" hidden></p>
       <p class="chat-foot">The conversation stays in this browser tab only.</p>
     </div>
 

@@ -258,3 +258,23 @@ html[data-theme="light"] .fit.no{background:rgba(20,22,58,0.06);}
 /* Chat box: no scrollbar until the text actually reaches the maximum height (js grow() turns it on). */
 .composer textarea{overflow-y:hidden;}
 .composer textarea::placeholder{white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
+
+/* ── Headline accent word: bevel it so it lifts off the graphic. Gradient-filled text can't use
+   text-shadow (it bleeds through the letters), so drop-shadows outline the painted letters instead. ── */
+.hero h1 .grad{filter:drop-shadow(0 -1px 0 rgba(255,255,255,0.35)) drop-shadow(0 1.5px 0 rgba(0,0,0,0.9)) drop-shadow(0 0 2px rgba(0,0,0,0.85)) drop-shadow(0 4px 14px rgba(0,0,0,0.6));}
+
+/* ── "Prefer to read it yourself?" link: the showroom's treatment — lavender on the same dark chip
+   as the tag above the headline, so it reads anywhere on the image. ── */
+.hero-link{padding:8px 16px; border-radius:999px; background:rgba(13,16,38,0.66); border:1px solid rgba(255,255,255,0.14); color:#e9d5ff; text-shadow:none;}
+.hero-link:hover{border-color:var(--purple-soft); text-decoration:none;}
+
+/* ── Microphone (talk instead of type): big enough for a thumb — 44px, 48px on touch screens. ── */
+.mic{width:44px; height:44px; flex-shrink:0; display:inline-flex; align-items:center; justify-content:center; border-radius:50%; border:1.5px solid rgba(129,140,248,0.7); background:var(--well); color:var(--text); cursor:pointer; transition:border-color .15s, background .15s;}
+.mic svg{width:20px; height:20px;}
+.mic:hover{border-color:var(--purple-soft);}
+.mic.on{border-color:#ff8a7a; background:rgba(255,138,122,0.16); animation:micpulse 1.3s ease-in-out infinite;}
+.mic[hidden]{display:none;}
+@keyframes micpulse{0%,100%{box-shadow:0 0 0 0 rgba(255,138,122,0.45);} 50%{box-shadow:0 0 0 7px rgba(255,138,122,0);}}
+@media (pointer:coarse){ .mic{width:48px; height:48px;} }
+.voice-note{font-size:calc(12px * var(--fs)); color:var(--text-soft); margin-top:8px; text-align:center;}
+.voice-note[hidden]{display:none;}
