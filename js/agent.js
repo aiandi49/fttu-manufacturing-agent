@@ -190,7 +190,13 @@
 
   /* ───────── sending ───────── */
   function chip(mode) { var c = $('countChip'); c.classList.remove('live', 'error'); if (mode) c.classList.add(mode); }
-  function grow() { input.style.height = 'auto'; input.style.height = Math.min(input.scrollHeight, 140) + 'px'; }
+  function grow() {
+    /* scrollHeight leaves out the borders; add them so the box never ends up a few pixels short (that is what drew a scrollbar) */
+    input.style.height = 'auto';
+    var need = input.scrollHeight + (input.offsetHeight - input.clientHeight);
+    input.style.height = Math.min(need, 140) + 'px';
+    input.style.overflowY = need > 140 ? 'auto' : 'hidden';
+  }
   function send() {
     var text = input.value.trim();
     if (!text || busy) return;
