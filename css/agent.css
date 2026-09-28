@@ -248,3 +248,13 @@ html[data-theme="light"] .fit.no{background:rgba(20,22,58,0.06);}
 /* Narrow phones / large text: let the brand subtitle wrap instead of pushing the menu button off-screen. */
 .brand{min-width:0;}
 .brand small{white-space:normal; line-height:1.15;}
+
+/* Hero copy over the graphic: semi-bold with an emboss (a tight dark edge behind every letter, a faint
+   highlight above, then a soft halo) so it reads on the brightest part of the image. The graphic is unchanged. */
+:root{--hero-emboss:0 1px 0 rgba(0,0,0,0.95), 0 -1px 0 rgba(255,255,255,0.16), 0 0 3px rgba(0,0,0,0.95), 0 2px 8px rgba(0,0,0,0.85), 0 6px 26px rgba(0,0,0,0.65);}
+.hero p{font-weight:600; text-shadow:var(--hero-emboss);}
+.hero-link{font-weight:700; color:#f3e8ff; text-shadow:var(--hero-emboss);}
+
+/* Chat box: no scrollbar until the text actually reaches the maximum height (js grow() turns it on). */
+.composer textarea{overflow-y:hidden;}
+.composer textarea::placeholder{white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
